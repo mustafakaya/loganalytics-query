@@ -1,0 +1,18 @@
+// represent a constant value
+let osName="linux";
+VMComputer
+| where OperatingSystemFamily == osName
+
+// multiple used. calculated value for 5h ago and constant value "linux"
+let osName="linux";
+let start = ago(5h); 
+VMComputer
+| where OperatingSystemFamily == osName and TimeGenerated >= start
+
+// can set return of query result set
+let cpuCount= 
+VMComputer
+| where OperatingSystemFamily == osName and TimeGenerated >= start and Cpus == cpuSize
+| summarize NumberOfEntries=count() by Cpus 
+| project NumberOfEntries
+
