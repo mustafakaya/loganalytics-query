@@ -1,0 +1,11 @@
+// Return up to the specified number of rows.
+// There is no guarantee which records are returned, unless the source data is sorted.
+
+// return random 100 records
+search in (Event) "error"
+| take 100
+
+// take and limit are synonyms.
+
+search in (Event) "error"
+| limit 100
