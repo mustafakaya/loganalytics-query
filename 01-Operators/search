@@ -1,0 +1,31 @@
+ // search can scan all columns in a given table, or in all tables, for the specified value.
+ 
+ // all columns in all tables are scanned for the term "error"
+ search "error"
+ 
+ // To search a term in a specific table
+ search in (Event) "error"
+ 
+ // To search in a term in multiple tables
+ search in (Event, SecurityEvent) "error"
+ 
+ // To search only a specific column (named Source in the below example)
+ search in (Event) Source:"error"
+ 
+  // To search exact value only a specific column (named Source in the below example) 
+ search in (Event) Source=="error"
+ 
+ // To search terms that start with "win"
+ search in (Event) "win*"
+ 
+ // To search terms that end with ".com":
+ search in (Event) "*.com"
+ 
+ // To search terms that contain "www":
+ search in (Event) "*www*"
+ 
+ // To search terms that starts with "corp" and ends in ".com", such as "corp.mydomain.com""
+ search in (Event) "corp*.com"
+ 
+ // To make the search case-sensitive, use the kind option
+ search kind=case_sensitive in (Event) "DNS"
