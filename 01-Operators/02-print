@@ -1,5 +1,15 @@
 // write anything for debugging
 print "Hello World"
 
-// Returns the current date/time
+// Returns the date time example
 print now()
+print ago(1d)           // days
+print ago(1h)           // hours
+print ago(1m)           // minutes
+print ago(1s)           // seconds 
+print ago(1ms)          // millisecond
+print ago(1microsecond) // microsecond
+print ago(1tick)        // nanosecond
+print ago(-1d)       // tomorrow
+print ago(-365d)     // 1 year in the future
+print ago(-1h)       // an hour from now
