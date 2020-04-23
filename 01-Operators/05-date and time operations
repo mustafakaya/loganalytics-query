@@ -25,3 +25,5 @@ Event
 // time zones
 Event
 | extend localTimestamp = TimeGenerated - 8h
+
+
