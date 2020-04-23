@@ -1,0 +1,1 @@
+# loganalytics-query-workshop
