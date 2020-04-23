@@ -1,0 +1,31 @@
+
+// makelist
+Event
+| where TimeGenerated > ago(12h)
+| order by TimeGenerated desc
+| summarize makelist(EventID) by Computer
+
+// makeset (remove duplicates from makelist)
+Event
+| where TimeGenerated > ago(12h)
+| order by TimeGenerated desc
+| summarize makeset(EventID) by Computer
+
+// mvexpand:The inverse operation of makelist or makeset
+// Heartbeat table for solutions sending data from computers that sent a heartbeat in the last hour
+Heartbeat
+| where TimeGenerated > ago(1h)
+| project Computer, Solutions
+
+// Use mvexpand to show each value in a separate row instead of a comma-separated list
+Heartbeat
+| where TimeGenerated > ago(1h)
+| project Computer, split(Solutions, ",")
+| mvexpand Solutions
+
+// use makelist again to group items together
+Heartbeat
+| where TimeGenerated > ago(1h)
+| project Computer, split(Solutions, ",")
+| mvexpand Solutions
+| summarize makelist(Computer) by tostring(Solutions)
