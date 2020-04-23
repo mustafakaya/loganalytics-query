@@ -10,3 +10,8 @@ VMComputer
 // rename column
 VMComputer
 | project-rename MachineName=HostName 
+
+// add calculated column as GB to the result
+VMComputer
+| project HostName , PhysicalMemoryMB 
+| extend PhysicalMemoryGB = PhysicalMemoryMB /1000
