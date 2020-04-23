@@ -1,0 +1,11 @@
+// sort result of the query (default: desc)
+VMComputer
+| project HostName , OperatingSystemFamily , Cpus , PhysicalMemoryMB, TimeGenerated  
+| order by TimeGenerated
+
+// for asc
+VMComputer
+| project HostName , OperatingSystemFamily , Cpus , PhysicalMemoryMB, TimeGenerated  
+| order by TimeGenerated asc
+
+// order and sort synonyms
