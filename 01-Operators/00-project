@@ -1,0 +1,12 @@
+
+// return Hostname, OperatingSystemFamily, Cpus, PhysicalMemoryMB columns of VMComputer table
+VMComputer
+| project HostName , OperatingSystemFamily , Cpus , PhysicalMemoryMB  
+
+// return all column except HostName , OperatingSystemFamily , Cpus , PhysicalMemoryMB 
+VMComputer
+| project-away HostName , OperatingSystemFamily , Cpus , PhysicalMemoryMB 
+
+// rename column
+VMComputer
+| project-rename MachineName=HostName 
