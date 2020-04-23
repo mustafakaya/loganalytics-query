@@ -1,0 +1,25 @@
+// aggregate the groups of rows
+
+// Return summarize count by grouping Cpus column in VMComputer table
+VMComputer
+| summarize count() by Cpus
+
+// Rename the output column for count
+VMComputer
+| summarize NumberOfEntries=count() by Cpus
+
+// Return avarage physcial memory of summarized records
+VMComputer
+| summarize NumberOfEntries=count(), AvaragePhysicalMemoryMB=avg(PhysicalMemoryMB) by Cpus
+
+// return grouping PhyicalMemoryMB for linux computers
+VMComputer 
+| where OperatingSystemFamily == "linux"
+| summarize NumberOfEntries=count() by PhysicalMemoryMB
+
+// Summarize into logical groups for 15 minutes
+VMComputer
+| summarize NumberOfEntries=count() by bin(TimeGenerated, 15m),
+
+
+
