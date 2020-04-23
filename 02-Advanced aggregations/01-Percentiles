@@ -1,0 +1,17 @@
+// To find the median value, use the percentile function with a value to specify the percentile
+Perf
+| where TimeGenerated > ago(30m) 
+| where CounterName == "% Processor Time" and InstanceName == "_Total" 
+| summarize percentiles(CounterValue, 5,50,90) by Computer
+
+// rename in the summarized columns
+Perf
+| where TimeGenerated > ago(30m) 
+| where CounterName == "% Processor Time" and InstanceName == "_Total" 
+| summarize (Percent05, Percent50, Percent95) = percentiles(CounterValue, 5,50,90) by Computer
+
+// return as a single column
+Perf
+| where TimeGenerated > ago(30m) 
+| where CounterName == "% Processor Time" and InstanceName == "_Total" 
+| summarize percentiles_array(CounterValue, 5,50,90) by Computer
