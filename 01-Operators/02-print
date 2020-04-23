@@ -1,0 +1,5 @@
+// write anything for debugging
+print "Hello World"
+
+// Returns the current date/time
+print now()
