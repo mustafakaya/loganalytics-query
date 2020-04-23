@@ -1,0 +1,5 @@
+// Returns the number of records
+
+// To get the number of Event records that contain "win"
+search in (Event) "win"
+| count
