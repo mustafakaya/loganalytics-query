@@ -1,0 +1,27 @@
+// between
+Heartbeat
+| where TimeGenerated between(datetime("2020-04-01 22:46:42") .. datetime("2020-04-23 00:57:27"))
+| take 100
+
+// now operator
+Heartbeat
+| where TimeGenerated > now() - 2m 
+Heartbeat
+| where TimeGenerated > now(-2m
+
+
+// bucketing examples
+
+// To get the number of events that occurred every 5 minutes during the last one hour:
+Event
+| where TimeGenerated > ago(1h)
+| summarize events_count=count() by bin(TimeGenerated, 5m)
+
+// Another way to create buckets of results is to use functions, such as startofday:
+Event
+| where TimeGenerated > ago(4d)
+| summarize events_count=count() by startofday(TimeGenerated)
+
+// time zones
+Event
+| extend localTimestamp = TimeGenerated - 8h
