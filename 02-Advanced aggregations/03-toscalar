@@ -1,0 +1,10 @@
+
+
+// find computers that are known to have missing updates and identify IPs that these computers called out to
+let ComputersNeedingUpdate = toscalar(
+    Update
+    | summarize makeset(Computer)
+    | project set_Computer
+);
+WindowsFirewall
+| where Computer in (ComputersNeedingUpdate)
