@@ -1,0 +1,47 @@
+// joins two tabels together when they have a common column name
+Perf
+| where TimeGenerated >= ago(30d)
+| take 1000
+| join (Alert) on Computer
+
+// When they don't have a common column you can still join them
+Perf
+| where TimeGenerated >= ago(30d)
+| take 1000
+| join (Alert) on $left.Computer == $right.Computer
+
+// to enrich the security event data with the event name for each event ID
+let DimTable = datatable(EventID:int, eventName:string)
+  [
+    4625, "Account activity",
+    4688, "Process action",
+    4634, "Account activity",
+    4658, "The handle to an object was closed",
+    4656, "A handle to an object was requested",
+    4690, "An attempt was made to duplicate a handle to an object",
+    4663, "An attempt was made to access an object",
+    5061, "Cryptographic operation",
+    5058, "Key file operation",
+    5059, "Key migration operation"
+  ];
+SecurityEvent
+| join kind = inner
+ DimTable on EventID
+| summarize count() by eventName
+
+// inner join
+// Only matching records in both tables are included in the results.
+
+// leftouter
+// All records in the left table and matching records in the right table are included in the results. Unmatched output properties contain nulls.
+
+// leftanti
+// Records from the left side that do not have matches from the right are included in the results. The results table has only columns from the left table.
+
+// leftsemi
+// Records from the left side that have matches from the right are included in the results. The results table has only columns from the left table.
+
+// Best practices
+// Use a time filter on each table to reduce the records that must be evaluated for the join.
+// Use where and project to reduce the numbers of rows and columns in the input tables before the join.
+// If one table is always smaller than the other, use it as the left side of the join.
