@@ -1,0 +1,46 @@
+// contains operator
+VMComputer 
+| where OperatingSystemFullName  contains "ubuntu"
+
+// case sensitive contains operator
+VMComputer 
+| where OperatingSystemFullName  contains_cs "Ubuntu"
+
+// not contains operator
+VMComputer 
+| where OperatingSystemFullName  !contains_cs "Ubuntu"
+
+// in operator
+VMComputer 
+| where HostName  in ("hardening-demo","rancher-node-3","node-4")
+
+// not in operator
+VMComputer 
+| where HostName  !in ("hardening-demo","rancher-node-3","node-4")
+
+// extract operator
+// syntax: extract(regex, captureGroup, text [, typeLiteral])
+// The following example extracts the last octet of ComputerIP from a heartbeat record
+Heartbeat
+| where ComputerIP != "" 
+| take 1
+| project ComputerIP, last_octet=extract("([0-9]*$)", 1, ComputerIP)
+
+// parse operator
+// syntax: replace(regex, rewrite, input_text)
+SecurityEvent
+| take 1
+| project Activity 
+| extend replaced = replace(@"(\d+) -", @"Activity ID \1: ", Activity)
+
+// parseurl operator
+// syntax: parseurl(urlstring)
+print parseurl("http://user:pass@contoso.com/icecream/buy.aspx?a=1&b=2#tag")
+
+
+// strcat operator
+print strcat("hello", " ", "world")	// result: "hello world"
+
+// tolower, toupper operator
+print tolower("HELLO");	// result: "hello"
+print toupper("hello");	// result: "HELLO"
