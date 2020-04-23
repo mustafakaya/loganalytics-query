@@ -1,0 +1,25 @@
+// count
+// returns the total number of rows in the Perf table from the last 30 minutes
+Perf
+| where TimeGenerated > ago(30m) 
+| summarize count()
+
+// Use dcount and dcountif to count distinct values in a specific column
+
+// dcount
+// evaluates how many distinct computers sent heartbeats in the last hour
+Heartbeat 
+| where TimeGenerated > ago(1h) 
+| summarize dcount(Computer)
+
+// To count only the Linux computers that sent heartbeats, use dcountif
+Heartbeat 
+| where TimeGenerated > ago(1h) 
+| summarize dcountif(Computer, OSType=="Linux")
+
+// To perform a count or other aggregations on subgroups in your data, use the by keyword
+// by
+// to count the number of distinct Linux computers that sent heartbeats in each country/region
+Heartbeat 
+| where TimeGenerated > ago(1h) 
+| summarize distinct_computers=dcountif(Computer, OSType=="Linux") by RemoteIPCountry
