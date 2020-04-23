@@ -1,0 +1,12 @@
+
+// makelist
+Event
+| where TimeGenerated > ago(12h)
+| order by TimeGenerated desc
+| summarize makelist(EventID) by Computer
+
+// makeset (remove duplicates from makelist)
+Event
+| where TimeGenerated > ago(12h)
+| order by TimeGenerated desc
+| summarize makeset(EventID) by Computer
