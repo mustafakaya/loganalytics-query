@@ -1,0 +1,25 @@
+// iif is a mini if/then/else 
+Perf
+| where CounterName == "% Free Space"
+| extend FreeState = iif( CounterValue < 50
+                        , "You might want to look at this"
+                        , "You're OK!"
+                        )
+| project Computer
+        , CounterName
+        , CounterValue 
+        , FreeState 
+
+
+// Used to create labels based on values
+Perf
+| where CounterName == "% Free Space"
+| extend FreeLevel = case( CounterValue < 10, "Critical"
+                         , CounterValue < 30, "Danger"
+                         , CounterValue < 50, "Look at it"
+                         , "You're OK!"
+                         )
+| project Computer
+        , CounterName
+        , CounterValue 
+        , FreeLevel 
