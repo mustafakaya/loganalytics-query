@@ -1,0 +1,5 @@
+// FIR Is Finiite Impulse Repsonse time. It is typically used in digital 
+// signal processing, such as that used in radio (especially amateur radio). 
+
+// The finite indicates the array of values, if continued, would eventually
+// dwindle down to a zero value.
