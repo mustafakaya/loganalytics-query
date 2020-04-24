@@ -1,0 +1,25 @@
+// Create series of specified aggregated values along specified axis.
+
+
+// Use the make-series function to assign a default value to empty buckets. 
+// This will generate a row for each category with two extra array columns, one for values, and one for matching time buckets:
+
+// before:
+
+Heartbeat
+| where TimeGenerated > ago(12h)
+| summarize count() by Category, bin(TimeGenerated, 1h)
+
+// with make-series  Use the make-series function to assign a default value to empty buckets.
+// This will generate a row for each category with two extra array columns, one for values, and one for matching time buckets
+Heartbeat
+| make-series count() default=0 on TimeGenerated in range(ago(1d), now(), 1h) by Category
+
+// use mvexpand to pivot them back to rows
+Heartbeat
+| make-series count() default=0 on TimeGenerated in range(ago(1d), now(), 1h) by Category 
+| mvexpand TimeGenerated, count_
+| project Category, TimeGenerated, count_
+
+
+https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/make-seriesoperator
