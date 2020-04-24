@@ -1,3 +1,5 @@
+// make-series is the basic operator which transforms tabular data into a new data type, an ordered series of numeric values. 
+
 // Create series of specified aggregated values along specified axis.
 
 
