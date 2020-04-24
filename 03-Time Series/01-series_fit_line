@@ -1,5 +1,17 @@
 // Applies linear regression on a series, returning multiple columns.
 
+// What does series_fit_line do? Finds the best straight line through your data, and tells how well it fits.
+// What is series_fit_line used for? Cases where you want to compute the trend of a series.
+// How does series_fit_line work? Linear regression is computed on the series values, 
+// which means that it finds the line of best fit to the data, together with a measure of the goodness of the fit.
+// What’s great about series_fit_line? It is useful in a variety of scenarios, in addition to anomaly detection
+// including future values assuming a trend, visualization, ranking of series according to slopes, and more.
+// example: Search for anomalous performance counters with series_fit_line
+
+// Example: You are being reported of service slowdowns from in one of your deployments, 
+// and would like to look at memory performance counters. However, even 10 series are impossible to make sense out of manually, 
+// and real systems have thousands. Where does root-cause analysis start?!
+
 // rsquare: r-square is a standard measure of the fit quality. It's a number in the range [0-1], 
 // where 1 - is the best possible fit, and 0 means the data is totally unordered and do not fit any line
 // slope: slope of the approximated line (this is a from y=ax+b)
