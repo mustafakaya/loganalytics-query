@@ -1,0 +1,9 @@
+// What does series_fit_2lines do? Fits two straight lines to your data, one line up to a certain point in time, 
+// and another one from the point.
+// What is series_fit_2lines used for? Cases where you want to quantify a change from one trend to another.
+
+// How does series_fit_2line work? Runs linear regression on splits of the data to two windows, and finds the best combination.
+What is great about series_fit_2lines used for? It’s a powerful ML-based trend change detection tool that automates tedious manual work 
+// and leads you directly to the point of change.
+
+// example: Investigate a memory leak with series_fit_2lines
