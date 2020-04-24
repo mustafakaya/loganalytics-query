@@ -1,0 +1,20 @@
+// Diffpatterns finds differences in data sets of the same structure
+// While the other commands try to find relationships, Diffpatterns finds differences in a dataset.  
+
+// difference between Warning (PercentA) and Error (PercentB) as represented by computer under the PercentDiffAB column.
+Event
+| where TimeGenerated >= ago(7d)
+and EventLevelName == "Warning" or EventLevelName == "Error"
+| project EventLevelName
+        , Computer
+| evaluate diffpatterns(EventLevelName, "Warning", "Error")
+
+// difference between success (PercentA) and failed (PercentB) logins for computer ContosoSQLSrv1
+SecurityEvent
+| where TimeGenerated >= ago(1d)
+and EventID == 4624 or EventID == 4625
+| project Account
+        , Computer
+        , EventID
+        , Activity
+| evaluate diffpatterns(EventID, "4624", "4625", "~", 0.02)
