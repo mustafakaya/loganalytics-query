@@ -1,0 +1,47 @@
+// basket analysis uses a method called the Apiori algorithm to attempt to
+// uncover frequency patterns in the data. The classic example is the grocery
+// basket, wanting to find the most popular combination of grocery items
+
+// Apiori works by first examining the frequency of each distinct value in
+// the list, then if an item is not frequent other combinations with that
+// item wouldn't be considered frequent either and thus are elimiated from
+// consideration. Once it has a list of attributes that are frequent,
+// it then analyzes the combination of attributes for frequency. 
+
+SecurityEvent
+| where TimeGenerated >= ago(1h)
+
+SecurityEvent
+| where TimeGenerated >= ago(1d)
+| project Account
+        , Computer
+        , Activity
+        , LogonTypeName
+| evaluate basket()
+
+// Here, we will do an analysis to see which combination of computer plus
+// performance counters appears the most frequently
+Perf
+| where TimeGenerated >= ago(10d)
+| project Computer
+        , ObjectName 
+        , CounterName
+        , InstanceName  
+| evaluate basket()
+
+
+// basket has several optional parameters, the first of which is threshold.
+// The threshold determines the minimum frequency a combination must occur
+// in order to be considered for inclusion. KQL uses a ratio of 0 to 1, 
+// with the default being 0.05
+let threshold = 0.03;
+Perf
+| where TimeGenerated >= ago(10d)
+| project Computer
+        , ObjectName 
+        , CounterName
+        , InstanceName  
+| evaluate basket(threshold)
+
+// Note there are some other parameters as well, but as these are
+// not frequently used you can refer to online help for more info.
