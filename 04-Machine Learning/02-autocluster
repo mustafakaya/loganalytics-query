@@ -1,0 +1,32 @@
+// autocluster looks for common patterns of discrete attributes in the data
+// and reduces it to just a small number of patterns. 
+// While the Basket command finds all frequent patterns in data, 
+// Autocluster finds frequent patterns in the data and reduces the results to a smaller number of patterns.
+// This works well for analyzing data like Event Logs to focus on more frequent patterns. 
+
+Update
+| where TimeGenerated >= ago(1d)
+| project Computer
+        , UpdateState
+        , Product
+        , OSType
+| evaluate autocluster()
+
+
+// changing the sizeWeight from the default of 0.5 to 0.1. 
+Update
+| where TimeGenerated >= ago(1d)
+| project Computer
+        , UpdateState
+        , Product
+        , OSType
+| evaluate autocluster(0.01)
+
+Event
+| where TimeGenerated >= ago(10d)
+| project Source 
+        , EventLog 
+        , Computer 
+        , EventLevelName 
+        , RenderedDescription 
+| evaluate autocluster()    
