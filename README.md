@@ -1,1 +1,1 @@
-# loganalytics-query-workshop
+# loganalytics-query
